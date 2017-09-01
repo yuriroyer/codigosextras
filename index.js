@@ -10,14 +10,17 @@ const tBody = $('#todasMensagens')
                 success: function (response) {
                     console.log(JSON.stringify(response));
                     $("#mensagem").val("");
-                    tBody.append(
+
                         $.ajax(
                             {
                                 type: 'GET',
                                 url: 'modelo/mensagem.php?metodo=listaMensagem&idticket='+data.idticket,
+                                success: function (responseMensagem) {
+                                   tBody.append(responseMensagem);
+                                }
                             }
                         );
-                    );
+
                     return false;
                 },
                 error: function (error) {
