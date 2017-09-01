@@ -1,4 +1,4 @@
-const tBody = $('#todasMensagens')
+var tBody = $('#todasMensagens');
 
     $('#enviar').on('click', function () {
         const serializedForm = $('#mensagemform').serialize();
@@ -8,18 +8,22 @@ const tBody = $('#todasMensagens')
                 url: 'modelo/mensagem.php',
                 data: serializedForm,
                 success: function (response) {
-                    console.log(JSON.stringify(response));
+                    //console.log(JSON.stringify(response));
+                    var obj = JSON.parse(response);
+                    console.log(obj);
                     $("#mensagem").val("");
 
-                        $.ajax(
-                            {
-                                type: 'GET',
-                                url: 'modelo/mensagem.php?metodo=listaMensagem&idticket='+data.idticket,
-                                success: function (responseMensagem) {
-                                   tBody.append(responseMensagem);
-                                }
+                    $.ajax(
+                        {
+                            type: 'GET',
+                            url: 'modelo/mensagem.php?metodo=listaMensagem&idticket=' + obj.idticket,
+
+                            success: function (responseMensagem) {
+                                console.log(responseMensagem);
+                                tBody.html(responseMensagem);
                             }
-                        );
+                        }
+                    );
 
                     return false;
                 },
